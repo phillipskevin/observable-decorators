@@ -8,7 +8,7 @@ QUnit.module('maurauder - rxjs');
 QUnit.test('basics', function() {
   var ObservableMap = Maurauder(Rx.Observable);
 
-  var vm = new ObservableMap({
+  var VM = ObservableMap({
     first: 'Kevin',
     last: 'Phillips',
     fullName(setStream, { zip }) {
@@ -17,6 +17,8 @@ QUnit.test('basics', function() {
       });
     }
   });
+
+  var vm = new VM();
 
   QUnit.stop();
   vm.fullName.subscribe(function(fullName) {

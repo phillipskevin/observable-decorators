@@ -1,26 +1,34 @@
 function MakeObservableMap(Observable) {
-  return function ObservableMap(props) {
-    var observableMap = this;
 
-    var makeGetter = function(val) {
-      return function() {
-        if (typeof val === 'function') {
-          var setStream = null;
+  // creates a constructor function
+  return function(props) {
+    return function ObservableMap() {
+      var observableMap = this;
 
-          return val.call(observableMap, setStream, Observable);
-        } else {
-          return Observable.of(val);
-        }
+      var getterSetter = function(val) {
+        var get = function() {
+          if (typeof val === 'function') {
+            var setStream = null;
+
+            return val.call(observableMap, setStream, Observable);
+          } else {
+            return Observable.of(val);
+          }
+        };
+
+        return {
+          get: get
+        };
       };
+
+      for (var prop in props) {
+        var _getSet = getterSetter(props[prop]);
+
+        Object.defineProperty(this, prop, {
+          get: _getSet.get
+        });
+      }
     };
-
-    for (var prop in props) {
-      var get = makeGetter(props[prop]);
-
-      Object.defineProperty(this, prop, {
-        get: get
-      });
-    }
   };
 }
 
