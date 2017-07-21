@@ -9,15 +9,27 @@
 ```js
 import ReactiveMap from 'maurauder';
 
-const vm = new ReactiveMap({
-  first: 'Kevin',
+const Person = ReactiveMap({
+  first: 'Tracy',
   last: 'Phillips',
-  fullName(setStream, { zip }) {
-    return zip(this.first, this.last, (first, last) => `${first} ${last}`);
+  fullName(setStream, { combineLatest }) {
+    return combineLatest(this.first, this.last, (first, last) => {
+      return first + ' ' + last;
+    })
+    .merge(setStream);
   }
 });
 
-vm.fullName.subscribe((fullName) => {
-  console.log(fullName); // Kevin Phillips
+const person = new Person({
+  first: 'Kevin'
 });
+
+person.fullName.subscribe((fullName) => {
+  // 'Kevin Phillips',
+  // 'Clancy Wiggum',
+  // 'Kevin McCallister'
+});
+
+person.fullName = 'Clancy Wiggum';
+person.last = 'McCallister';
 ```

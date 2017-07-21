@@ -48,12 +48,10 @@ QUnit.test('can create settable streams derived from other streams', () => {
   assertStreamValues(vm.fullName, [
     'Kevin Phillips',
     'Clancy Wiggum',
-    'Kevin Quinn',
-    'Laura Quinn'
+    'Kevin McCallister'
   ], 'vm.fullName');
 
   // cannot set until after subscribing
   vm.fullName = 'Clancy Wiggum';
-  vm.last = 'Quinn';
-  vm.first = 'Laura';
+  vm.last = 'McCallister';
 });
