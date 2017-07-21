@@ -1,42 +1,59 @@
 import QUnit from 'steal-qunit';
 import ReactiveMap from './maurauder';
 
+function assertStreamValues(stream, values, key) {
+  values.forEach(() => {
+    QUnit.stop();
+  });
+
+  let count = 0;
+
+  stream.subscribe((val) => {
+    QUnit.equal(val, values[count], `${key}[${count}] should be ${values[count]}`);
+    count++;
+    QUnit.start();
+  });
+}
+
 QUnit.module('maurauder');
 
-QUnit.test('can create settable streams of primitive values', function() {
-  var VM = ReactiveMap({
+QUnit.test('can create settable streams of primitive values', () => {
+  const VM = ReactiveMap({
     first: 'Kevin'
   });
 
-  var vm = new VM({});
+  const vm = new VM({});
+  assertStreamValues(vm.first, [ 'Kevin', 'Tracy' ], 'vm.first');
 
-  QUnit.stop();
-  vm.first.subscribe(function(first) {
-    QUnit.equal(first, 'Tracy', 'first works');
-    QUnit.start();
-  });
-
+  // cannot set until after subscribing
   vm.first = 'Tracy';
 });
 
-QUnit.test('can create streams derived from other streams', function() {
-  var VM = ReactiveMap({
-    first: 'Kevin',
+QUnit.test('can create settable streams derived from other streams', () => {
+  const VM = ReactiveMap({
+    first: 'Tracy',
     last: 'Phillips',
-    fullName(setStream, { zip }) {
-      return zip(this.first, this.last, function(first, last) {
+    fullName(setStream, { combineLatest }) {
+      return combineLatest(this.first, this.last, (first, last) => {
         return first + ' ' + last;
-      });
+      })
+      .merge(setStream);
     }
   });
 
-  var vm = new VM({
-    first: 'Tracy'
+  const vm = new VM({
+    first: 'Kevin'
   });
 
-  QUnit.stop();
-  vm.fullName.subscribe(function(fullName) {
-    QUnit.equal(fullName, 'Tracy Phillips', 'fullName works');
-    QUnit.start();
-  });
+  assertStreamValues(vm.fullName, [
+    'Kevin Phillips',
+    'Clancy Wiggum',
+    'Kevin Quinn',
+    'Laura Quinn'
+  ], 'vm.fullName');
+
+  // cannot set until after subscribing
+  vm.fullName = 'Clancy Wiggum';
+  vm.last = 'Quinn';
+  vm.first = 'Laura';
 });
