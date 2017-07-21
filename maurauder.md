@@ -2,4 +2,4 @@
 
 # maurauder
 
-Observable Maps
+Reactive Maps

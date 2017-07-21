@@ -1,35 +1,35 @@
-function MakeObservableMap(Observable) {
+import { Observable } from 'rxjs/Rx';
 
-  // creates a constructor function
-  return function(props) {
-    return function ObservableMap() {
-      var observableMap = this;
+export default function extend(props) {
+  return function ReactiveMap(newProps) {
+    var reactiveMap = this;
 
-      var getterSetter = function(val) {
-        var get = function() {
-          if (typeof val === 'function') {
-            var setStream = null;
+    var getterSetter = function(val) {
+      var get = function() {
+        if (typeof val === 'function') {
+          var setStream = null;
 
-            return val.call(observableMap, setStream, Observable);
-          } else {
-            return Observable.of(val);
-          }
-        };
-
-        return {
-          get: get
-        };
+          return val.call(reactiveMap, setStream, Observable);
+        } else {
+          return Observable.of(val);
+        }
       };
 
-      for (var prop in props) {
-        var _getSet = getterSetter(props[prop]);
-
-        Object.defineProperty(this, prop, {
-          get: _getSet.get
-        });
-      }
+      return {
+        get: get
+      };
     };
+
+    for (var newProp in newProps) {
+      props[newProp] = newProps[newProp];
+    }
+
+    for (var prop in props) {
+      var _getSet = getterSetter(props[prop]);
+
+      Object.defineProperty(this, prop, {
+        get: _getSet.get
+      });
+    }
   };
 }
-
-module.exports = MakeObservableMap;

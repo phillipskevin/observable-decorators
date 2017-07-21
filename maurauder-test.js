@@ -1,14 +1,26 @@
 import QUnit from 'steal-qunit';
-import Maurauder from './maurauder';
+import ReactiveMap from './maurauder';
 
-import Rx from 'rxjs/Rx';
+QUnit.module('maurauder');
 
-QUnit.module('maurauder - rxjs');
+QUnit.test('can create settable streams of primitive values', function() {
+  var VM = ReactiveMap({
+    first: 'Kevin'
+  });
 
-QUnit.test('basics', function() {
-  var ObservableMap = Maurauder(Rx.Observable);
+  var vm = new VM({});
 
-  var VM = ObservableMap({
+  QUnit.stop();
+  vm.first.subscribe(function(first) {
+    QUnit.equal(first, 'Tracy', 'first works');
+    QUnit.start();
+  });
+
+  vm.first = 'Tracy';
+});
+
+QUnit.test('can create streams derived from other streams', function() {
+  var VM = ReactiveMap({
     first: 'Kevin',
     last: 'Phillips',
     fullName(setStream, { zip }) {
@@ -18,11 +30,13 @@ QUnit.test('basics', function() {
     }
   });
 
-  var vm = new VM();
+  var vm = new VM({
+    first: 'Tracy'
+  });
 
   QUnit.stop();
   vm.fullName.subscribe(function(fullName) {
-    QUnit.equal(fullName, 'Kevin Phillips', 'fullName works');
+    QUnit.equal(fullName, 'Tracy Phillips', 'fullName works');
     QUnit.start();
   });
 });
