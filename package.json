@@ -30,14 +30,23 @@
     ""
   ],
   "steal": {
+    "babelOptions": {
+      "plugins": ["transform-decorators-legacy"]
+    },
     "main": "maurauder",
     "npmIgnore": [
       "testee",
       "steal-tools"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "can-reflect": "^1.2.4",
+    "can-symbol": "^1.0.0",
+    "can-util": "^3.9.6"
+  },
   "devDependencies": {
+    "can-define": "^1.3.2",
+    "can-stache": "^3.3.2",
     "jshint": "^2.9.1",
     "kefir": "^3.7.3",
     "rxjs": "^5.4.2",

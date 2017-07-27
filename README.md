@@ -7,18 +7,26 @@
 ## Usage
 
 ```js
-import ReactiveMap from 'maurauder';
+import observable from 'maurauder';
 
-const Person = ReactiveMap({
-  first: 'Tracy',
-  last: 'Phillips',
-  fullName(setStream, { combineLatest }) {
-    return combineLatest(this.first, this.last, (first, last) => {
-      return first + ' ' + last;
-    })
-    .merge(setStream);
+class Person {
+  constructor(override) {
+    Object.assign(this, override);
   }
-});
+
+  @observable
+  first = 'Kevin';
+
+  @observable
+  last = 'Phillips';
+
+  @observable
+  fullName() {
+    return this.first.combineLatest(this.last, (first, last) => {
+      return first + ' ' + last;
+    });
+  }
+}
 
 const person = new Person({
   first: 'Kevin'
@@ -26,10 +34,8 @@ const person = new Person({
 
 person.fullName.subscribe((fullName) => {
   // 'Kevin Phillips',
-  // 'Clancy Wiggum',
   // 'Kevin McCallister'
 });
 
-person.fullName = 'Clancy Wiggum';
 person.last = 'McCallister';
 ```
