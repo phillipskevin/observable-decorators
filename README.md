@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/phillipskevin/maurauder.svg?branch=master)](https://travis-ci.org/phillipskevin/maurauder)
 
-(Experimental) Reactive Maps
+Observable Maps using decorators
 
 ## Usage
 
