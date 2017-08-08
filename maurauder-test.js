@@ -20,7 +20,7 @@ QUnit.module('maurauder');
 QUnit.test('can create settable streams of primitive values', () => {
   class Person {
     @observable
-    first = 'Kevin'
+    first = 'Kevin';
   }
 
   const person = new Person();

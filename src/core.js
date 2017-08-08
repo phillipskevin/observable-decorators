@@ -13,12 +13,16 @@ export default function MakeMaurauder(Observable) {
     return {
       get() {
         if (typeof descriptor.value === 'function') {
-          // create stream property derived from a function
-          // this is used when you pass `prop: function() { ... }`
+          // create derived stream property using function
+          //
+          // @observable
+          // myProp() { ... }
           return descriptor.value.call(target, observable);
         } else {
           // create "simple" stream property
-          // this is used when you pass `prop: true`
+          //
+          // @obserable
+          // first = 'Kevin';
           return observable
             .startWith(...startWith);
         }
