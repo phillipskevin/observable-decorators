@@ -10,22 +10,39 @@ export default function MakeMaurauder(Observable) {
       startWith.push( descriptor.initializer() );
     }
 
+    // create cache for storing observables
+    // so that getter / initializer functions only need to run once
+    if (!target._observables) {
+      Object.defineProperty(target, '_observables', {
+        enumerable: false,
+        value: {}
+      });
+    }
+
     return {
       get() {
-        if (typeof descriptor.value === 'function') {
-          // create derived stream property using function
-          //
-          // @observable
-          // myProp() { ... }
-          return descriptor.value.call(target, observable);
-        } else {
-          // create "simple" stream property
-          //
-          // @obserable
-          // first = 'Kevin';
-          return observable
-            .startWith(...startWith);
+        const cache = target._observables;
+
+        // cache observable if not already present
+        if (!cache[key]) {
+          if (typeof descriptor.value === 'function') {
+            // create derived stream property using function
+            //
+            // @observable
+            // myProp() { ... }
+            cache[key] = descriptor.value.call(target, observable);
+          } else {
+            // create "simple" stream property
+            //
+            // @obserable
+            // first = 'Kevin';
+            cache[key] = observable
+              .startWith(...startWith);
+          }
         }
+
+        // return value from cache
+        return cache[key];
       },
 
       set(val) {
