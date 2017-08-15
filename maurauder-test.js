@@ -84,3 +84,28 @@ QUnit.test('can create streams derived from their own set values', () => {
   lt.lastThree = 'five';
   lt.lastThree = 'six';
 });
+
+QUnit.test('should cache streams', () => {
+  class Person {
+    @observable
+    first = 'Kevin';
+
+    @observable
+    last = 'Phillips';
+
+    @observable
+    fullName() {
+      return this.first.combineLatest(this.last, (first, last) => {
+        return first + ' ' + last;
+      });
+    }
+  }
+
+  const person = new Person();
+
+  person.first.foo = 'bar';
+  QUnit.equal(person.first.foo, 'bar');
+
+  person.fullName.foo = 'bar';
+  QUnit.equal(person.fullName.foo, 'bar');
+});
