@@ -1,7 +1,7 @@
 {
   "name": "raven",
   "version": "0.0.0",
-  "description": "Make any property observable using decorators",
+  "description": "Make class properties observable using decorators",
   "homepage": "",
   "repository": {
     "type": "git",

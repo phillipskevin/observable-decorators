@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/phillipskevin/raven.svg?branch=master)](https://travis-ci.org/phillipskevin/raven)
 
-Observable Maps using decorators
+Make class properties observable using decorators
 
 ## Usage
 
