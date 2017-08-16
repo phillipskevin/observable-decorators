@@ -1,13 +1,13 @@
-# maurauder
+# raven
 
-[![Build Status](https://travis-ci.org/phillipskevin/maurauder.svg?branch=master)](https://travis-ci.org/phillipskevin/maurauder)
+[![Build Status](https://travis-ci.org/phillipskevin/raven.svg?branch=master)](https://travis-ci.org/phillipskevin/raven)
 
 Observable Maps using decorators
 
 ## Usage
 
 ```js
-import observable from 'maurauder';
+import observable from 'raven';
 
 class Person {
   constructor(override) {

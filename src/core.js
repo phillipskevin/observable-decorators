@@ -1,4 +1,4 @@
-export default function MakeMaurauder(Observable) {
+export default function makeDecorator(Observable) {
   return function observableDecorator(target, key, descriptor) {
     const startWith = [];
     let observer = null;
