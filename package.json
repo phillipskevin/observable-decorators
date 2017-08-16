@@ -1,11 +1,11 @@
 {
-  "name": "maurauder",
+  "name": "raven",
   "version": "0.0.0",
-  "description": "Reactive Maps",
+  "description": "Make any property observable using decorators",
   "homepage": "",
   "repository": {
     "type": "git",
-    "url": "git://github.com/phillipskevin/maurauder.git"
+    "url": "git://github.com/phillipskevin/raven.git"
   },
   "author": {
     "name": "Kevin Phillips",
@@ -25,7 +25,7 @@
     "release:major": "npm version major && npm publish",
     "build": "node build.js"
   },
-  "main": "maurauder",
+  "main": "raven",
   "keywords": [
     ""
   ],
@@ -35,7 +35,7 @@
         "transform-decorators-legacy"
       ]
     },
-    "main": "maurauder",
+    "main": "raven",
     "npmIgnore": [
       "testee",
       "steal-tools"
