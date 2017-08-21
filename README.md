@@ -1,13 +1,13 @@
-# raven
+# observable-decorators
 
-[![Build Status](https://travis-ci.org/phillipskevin/raven.svg?branch=master)](https://travis-ci.org/phillipskevin/raven)
+[![Build Status](https://travis-ci.org/phillipskevin/observable-decorators.svg?branch=master)](https://travis-ci.org/phillipskevin/observable-decorators)
 
 Make class properties observable using decorators
 
 ## Usage
 
 ```js
-import observable from 'raven';
+import observable from 'observable-decorators';
 
 class Person {
   constructor(override) {
