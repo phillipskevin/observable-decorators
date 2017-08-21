@@ -1,5 +1,5 @@
 import QUnit from 'steal-qunit';
-import observable from './raven';
+import observable from './observable-decorators';
 
 function assertStreamValues(stream, values, key) {
   values.forEach(() => {
@@ -15,7 +15,7 @@ function assertStreamValues(stream, values, key) {
   });
 }
 
-QUnit.module('raven');
+QUnit.module('observable-decorators');
 
 QUnit.test('can create settable streams of primitive values', () => {
   class Person {

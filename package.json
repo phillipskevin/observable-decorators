@@ -1,11 +1,11 @@
 {
-  "name": "raven",
+  "name": "observable-decorators",
   "version": "0.0.0",
   "description": "Make class properties observable using decorators",
   "homepage": "",
   "repository": {
     "type": "git",
-    "url": "git://github.com/phillipskevin/raven.git"
+    "url": "git://github.com/phillipskevin/observable-decorators.git"
   },
   "author": {
     "name": "Kevin Phillips",
@@ -25,7 +25,7 @@
     "release:major": "npm version major && npm publish",
     "build": "node build.js"
   },
-  "main": "raven",
+  "main": "observable-decorators",
   "keywords": [
     ""
   ],
@@ -35,7 +35,7 @@
         "transform-decorators-legacy"
       ]
     },
-    "main": "raven",
+    "main": "observable-decorators",
     "npmIgnore": [
       "testee",
       "steal-tools"
