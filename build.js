@@ -10,9 +10,7 @@ stealTools.export({
 		"+global-js": {}
 	}
 }).catch(function(e){
-
 	setTimeout(function(){
 		throw e;
 	}, 1);
-
 });
