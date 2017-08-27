@@ -21,7 +21,7 @@ class Person {
   last = 'Phillips';
 
   @observable
-  fullName() {
+  get fullName() {
     return this.first.combineLatest(this.last, (first, last) => {
       return first + ' ' + last;
     });

@@ -34,13 +34,13 @@ export function observableFromConfig({ toObservable, fromObservable } = defaultC
 
 				// cache observable if not already present
 				if (!cache[key]) {
-					if (typeof descriptor.value === 'function') {
-						// create derived stream property using function
+					if (typeof descriptor.get === 'function') {
+						// create derived stream property using getter
 						//
 						// @observable
-						// myProp() { ... }
+						// get myProp() { ... }
 						cache[key] = fromObservable(
-							descriptor.value.call(target, observable)
+							descriptor.get.call(target)
 						);
 					} else {
 						// create "simple" stream property
