@@ -47,7 +47,7 @@ QUnit.test('can create streams derived from other streams', () => {
 		last = 'Phillips';
 
 		@observable
-		fullName() {
+		get fullName() {
 			return this.first.combineLatest(this.last, (first, last) => {
 				return first + ' ' + last;
 			});
@@ -66,30 +66,6 @@ QUnit.test('can create streams derived from other streams', () => {
 	]);
 });
 
-QUnit.test('can create streams derived from their own set values', () => {
-	class LastThree {
-		@observable
-		lastThree(fullNameSetStream) {
-			return fullNameSetStream
-				.startWith([ 'one', 'two', 'three' ])
-				.scan((acc, latest) => acc.slice(1, 3).concat([ latest ]));
-		}
-	}
-
-	const lt = new LastThree();
-
-	assertStreamValues(lt, 'lastThree', [
-		[ 'one', 'two', 'three' ],
-		[ 'two', 'three', 'four' ],
-		[ 'three', 'four', 'five' ],
-		[ 'four', 'five', 'six' ]
-	]);
-
-	lt.lastThree = 'four';
-	lt.lastThree = 'five';
-	lt.lastThree = 'six';
-});
-
 QUnit.test('should cache streams', () => {
 	class Person {
 		@observable
@@ -99,7 +75,7 @@ QUnit.test('should cache streams', () => {
 		last = 'Phillips';
 
 		@observable
-		fullName() {
+		get fullName() {
 			return this.first.combineLatest(this.last, (first, last) => {
 				return first + ' ' + last;
 			});
@@ -131,7 +107,7 @@ QUnit.test('works with Kefir', () => {
 		last = 'Phillips';
 
 		@kefirObservable
-		fullName() {
+		get fullName() {
 			return Kefir.combine([ this.first, this.last ], (first, last) => {
 				return first + ' ' + last;
 			});
